@@ -1,180 +1,214 @@
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
-
-Alternatively, for H1 and H2, an underline-ish style:
-
-Alt-H1
-===
-H2
+![alt text](https://png.icons8.com/ios/250/bdc3c7/markdown.png "Logo Title Text 1")
 
 
-## Emphasis
-Emphasis, aka italics, with *asterisks* or _underscores_.
+# UDMarkdown
+###### markdown component for universal dashboard
 
-Strong emphasis, aka bold, with **asterisks** or __underscores__.
+## What Is UDMarkdown ?
+Its a custom component for Universal Dashboard that let you render markdown inside Universal Dashboard.
 
-Combined emphasis with **asterisks and _underscores_**.
+---
+## Get Started...
 
-Strikethrough uses two tildes. ~~Scratch this.~~
+1. clone the repo
+2. cd into Source
+3. Run .\Powershell\build.ps1
+   it will create new folder name UniversalDashboard.Markdown
+4. import UniversalDashboard.Community
+5. import the compiled module from Powershell\UniversalDashboard.Markdown\UniversalDashboard.Markdown.psd1
+6. Run .\PowerShell\dashboard.ps1 to start UDMarkdown demo site.
+7. Have Fun!!!! 
 
-## LIST
+> You Need To Install Node.js For This To Work.
 
-1. First ordered list item
-2. Another item
-   * Unordered sub-list. 
-1. Actual numbers don't matter, just that it's a number
-  1. Ordered sub-list
-4. And another item.
+---
+## Great Projects
 
-   You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
+This project was build from all those great project check them out. 
 
-   To have a line break without a paragraph, you will need to use two trailing spaces.  
-   Note that this line is separate, but within the same paragraph.  
-   (This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+[Universal Dashboard](https://github.com/ironmansoftware/universal- "Universal-Dashboard Repository")
 
-* Unordered list can use asterisks
-  * TEST
-  1. 2  
-- Or minuses  
-+ Or pluses
+[React-Markdown](https://github.com/rexxars/react-markdown "React Markdown Home Repository")
 
-## LINKS
+[React-Syntax-Highlighter](https://github.com/conorhastings/react-syntax-highlighter "React Syntax Highlighter Repository")
 
-[I'm an inline-style link](https://www.google.com)
 
-[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
 
-[I'm a reference-style link][Arbitrary case-insensitive reference text]
+---
+## Support For Syntex highlight In Code Block.
 
-[I'm a relative reference to a repository file](../blob/master/LICENSE)
+changing the code block syntex highlight color
 
-[You can use numbers for reference-style link definitions][1]
+Go to **.\Source\app\components\code\code-block.js**
+Then change **line 4** from github to somthing else.
 
-Or leave it empty and use the [link text itself].
+Add syntex highlight to more powershell command
 
-URLs and URLs in angle brackets will automatically get turned into links. 
-http://www.example.com or <http://www.example.com> and sometimes 
-example.com (but not on Github, for example).
+By default only build in cmdlets will be hightlight, to add more command do the following
 
-Some text to show that the reference links can follow later.
+Go to **.\Source\node_modules\highlight.js\lib\languages\powershell.js** and add your cmdlet name to line **67**
 
-[arbitrary case-insensitive reference text]: https://www.mozilla.org
-[1]: http://slashdot.org
-[link text itself]: http://www.reddit.com
 
-## IMAGES
+## Examples
 
-Here's our logo (hover to see the title text):
+##### Inline Code
+Using `-Styles` parameter in `New-UDMarkdown` you can style any tag.  
 
-Inline-style: 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
-Reference-style: 
-![alt text][logo]
-
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
-
-## Code and Syntex highlight
-
-#### Inline Code
-No highlight for in line code.
-
-#### Code Block
-
+##### Code Block
 ```powershell
-$Page = New-UDPage -Name PlatyPS -Icon code -DefaultHomePage -Content {
+Get-UDDashboard | Stop-UDDashboard
+
+$Page = New-UDPage -Name Home -Icon code -Content {
     New-UDRow -Columns {
         New-UDColumn -Content {
+            # Get the content of markdown file.
+            $md = Get-Content -Path .\PowerShell\DemoPage.md -Raw
 
-            $md = Get-Content -Path .\PowerShell\DemoPage.md -raw
+            New-UDMarkdown -Markdown $md -ShowLineNumberInCodeBlock -Styles @{
 
-            New-UDMarkdown -Markdown $md -CodeBlockStyle @{
-
-                'border-radius' = '6px' # Css parameter that have - or space must be in ''.
-                background      = '#e6e6e6' 
-                padding         = '16px'
-
-            } -CodeBlockShowLineNumbers
-        }
+                root =@{
+                    border = '2px solid rgb(24, 26, 31)'
+                    'background-color' = '#343a40'
+                    margin = '20px 0'
+                }
+                img = @{
+                    # width = '50%'; 
+                    display = 'block'; 
+                    'margin-left' = 'auto'; 
+                    'margin-right' = 'auto'
+                }
+            }                
+            
+        } -LargeOffSet 3 -LargeSize 6
     }
 }
-```
- 
-```
-No language indicated, so no syntax highlighting. 
-But let's throw in a <b>tag</b>.
+
+$dbProps = @{
+    FontIconStyle = 'LineAwesome'
+    BackgroundColor = '#24292e'
+    FontColor = '#b0bec5'
+    NavBarColor = '#202529'
+    NavBarFontColor = '#fff'
+    NavbarLinks = @(
+        New-UDLink -Text 'GitHub' -Url 'https://github.com/AlonGvili/UniversalDashboard.Markdown' -Icon github_alt -FontColor '#fff'
+    )
+}
+
+$db = New-UDDashboard -Title "UDMarkdown" -Pages $Page @dbProps
+
+Start-UDDashboard -Dashboard $db -Port 10012
 ```
 
-## Tables
+---
+## Parameters
 
-Colons can be used to align columns.
+New-UDMarkdown Parameters
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| Parameter        | Value           |
+| ------------- |:-------------:|
+| `-Markdown`      | String |
+| `-ShowLineNumberInCodeBlock`      | Bool      |
+| `-Styles` | HashTable      |
 
 There must be at least 3 dashes separating each header cell.
 The outer pipes (|) are optional, and you don't need to make the 
 raw Markdown line up prettily. You can also use inline Markdown.
 
-Markdown | Less | Pretty
---- | --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
+## Styles Parameter Options
 
-## Blockquotes
+For styling your markdown use the following options.
 
-> Blockquotes are very handy in email to emulate reply text.
-> This line is part of the same quote.
+`root` - this will add styles to main container
 
-Quote break.
+`h1` - `h6` - add styles to heading
 
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote. 
+`blockquote` - add styles to blockquote
 
-## Html
+`img` - add styles to images
 
-You can also use raw HTML in your Markdown, and it'll mostly work pretty well.
+`inlinecode` - add styles to inline code only
 
-<dl>
-  <dt>Definition list</dt>
-  <dd>Is something people use sometimes.</dd>
+`codeBlock` - add styles to code block only
 
-  <dt>Markdown in HTML</dt>
-  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
-</dl>
+`p` - add styles to paragraph
 
-```html
-<dl>
-  <dt>Definition list</dt>
-  <dd>Is something people use sometimes.</dd>
+`hr` - add styles to horizontal row
 
-  <dt>Markdown in HTML</dt>
-  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
-</dl>
+`em` - add styles to emphasis text
+
+`strong` - add styles to bold text
+
+`delete` - add styles to delete text
+
+`link` - add styles to a tag
+
+##### For styling a table use nested hashtable
+
+`table` - add styles to table container
+
+`thead` - add styles to table header
+
+`tbody` - add styles to table body
+
+`trow` - add styles to table row
+
+`td` - add styles to table cell
+
+##### Eample
+
+```powershell
+table = @{
+    ...
+    thead = @{
+        ...
+    }
+    tbody = @{
+        ...
+        trow = @{
+            ...
+            td = @{
+                ...
+            }
+        }
+    }
+}
 ```
 
-## Horizontal Rule
+##### For styling a list use nested hashtable
 
-Three or more...
+`list` - add styles to list container
+
+`ol` - add styles to order list only
+
+`ul` - add styles to unordered list only
+
+`listitem` - add styles to a list item
+
+##### Example
+
+```powershell
+list = @{
+    ...
+    ol = @{
+        ...
+    }
+    ul = @{
+        ...
+    }
+    listitem = @{
+        ...
+    }
+}
+```
 
 ---
+## Downloads
 
-Hyphens
+> Get this module from PSGallery [UniversalDashboard.Markdown](https://www.powershellgallery.com/packages/UniversalDashboard.Markdown/1.0.0)
 
-***
+or
 
-Asterisks
+> Install using PowerShellGet `Install-Module -Name UniversalDashboard.Markdown`
 
-___
 
-Underscores
 
-## YouTube
-
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/jCVrx6Mr5iU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
