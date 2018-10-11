@@ -13,8 +13,8 @@ Markdown control for Universal Dashboard.
 ## SYNTAX
 
 ```
-New-UDMarkdown [-Markdown] <String> [-ShowLineNumberInCodeBlock] [[-CodeBlockStyle] <Hashtable>]
- [-RenderRawHtml] [<CommonParameters>]
+New-UDMarkdown [-Markdown] <String> [-ShowLineNumberInCodeBlock] [[-Styles] <Hashtable>] [-RenderRawHtml]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,6 +47,7 @@ New-UDPage -Name Home -Icon code -Content {
     }
 }
 ```
+
 Render the content of DemoPage.md, Add custom style to the code block and display line numbers in code block.
 
 ## PARAMETERS
@@ -81,10 +82,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -CodeBlockStyle
-Hashtable of valid css properties, if the property name have \[ - \] in the name then it must be in ' '.
-This parameter only control the style of the \<pre\> block in your document.
-Styles here will overwrite earlier styles.
+### -Styles
+Hashtable of valid css properties, if the property name have [ - ] in the name then it must be in ' '.
+
 
 ```yaml
 Type: Hashtable
@@ -116,8 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
