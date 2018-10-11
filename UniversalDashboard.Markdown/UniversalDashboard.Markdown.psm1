@@ -14,7 +14,7 @@ The markdown text to render as HTML.
 .PARAMETER ShowLineNumberInCodeBlock
 Display line number on the left of every line in code block.
 
-.PARAMETER CodeBlockStyle
+.PARAMETER Styles
 Hashtable of valid css properties, if the property name have [ - ] in the name then it must be in ' '.
 This parameter only control the style of the <pre> block in your document.
 Styles here will overwrite earlier styles.
@@ -36,11 +36,14 @@ New-UDPage -Name Home -Icon code -Content {
             $md = Get-Content -Path .\PowerShell\DemoPage.md
 
             
-            New-UDMarkdown -Markdown $md -CodeBlockStyle @{
-                'border-radius' = '6px' 
-                background = '#e6e6e6' 
-                padding = '16px'
-            } -CodeBlockShowLineNumbers
+            New-UDMarkdown -Markdown $md -Styles @{
+
+                h1 = @{
+                    background = '#e6e6e6' 
+                    padding = '16px'
+                }
+
+            } -ShowLineNumberInCodeBlock
         }
     }
 }
@@ -62,7 +65,7 @@ function New-UDMarkdown
         [parameter()]
         [switch]$ShowLineNumberInCodeBlock,
         [parameter()]
-        [hashtable]$CodeBlockStyle,
+        [hashtable]$Styles,
         [parameter()]
         [switch]$RenderRawHtml
     )
@@ -91,24 +94,10 @@ function New-UDMarkdown
         }
     }
 
-    # Add default css propertues to code block.
-    if ($CodeBlockStyle)
-    {
-        $CodeBlockStyle.Add('display', 'flex')
-        $CodeBlockStyle.Add('width', 'fit-content')
-    }
-    else
-    {
-        $CodeBlockStyle = @{
-            display = 'flex'
-            width   = 'fit-content'
-        }
-    }
-
     New-UDElement -JavaScriptPath $JsFile -ModuleName "UDMarkdown" -Properties @{
         markdown        = $Markdown.toString()
         showLineNumbers = $LineNumber
-        customStyle     = $CodeBlockStyle
+        styles          = $Styles
         escapeHtml      = $RawHtml
     }
 }
