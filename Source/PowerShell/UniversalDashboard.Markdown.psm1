@@ -62,7 +62,7 @@ function New-UDMarkdown
         [parameter()]
         [switch]$ShowLineNumberInCodeBlock,
         [parameter()]
-        [hashtable]$CodeBlockStyle,
+        [hashtable]$Styles,
         [parameter()]
         [switch]$RenderRawHtml
     )
@@ -91,24 +91,10 @@ function New-UDMarkdown
         }
     }
 
-    # Add default css propertues to code block.
-    if ($CodeBlockStyle)
-    {
-        $CodeBlockStyle.Add('display', 'flex')
-        $CodeBlockStyle.Add('width', 'fit-content')
-    }
-    else
-    {
-        $CodeBlockStyle = @{
-            display = 'flex'
-            width   = 'fit-content'
-        }
-    }
-
     New-UDElement -JavaScriptPath $JsFile -ModuleName "UDMarkdown" -Properties @{
         markdown        = $Markdown.toString()
         showLineNumbers = $LineNumber
-        customStyle     = $CodeBlockStyle
+        styles          = $Styles
         escapeHtml      = $RawHtml
     }
 }
