@@ -51,7 +51,7 @@ Go to **.\Source\node_modules\highlight.js\lib\languages\powershell.js** and add
 ## Examples
 
 
-![alt text](./assets/example.png)
+![alt text](https://raw.githubusercontent.com/AlonGvili/UniversalDashboard.Markdown/master/assets/example.PNG)
 ##### Inline Code
 Using `-Styles` parameter in `New-UDMarkdown` you can style any tag.  
 
