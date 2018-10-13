@@ -2,7 +2,6 @@
 
 
 # UDMarkdown
-###### markdown component for universal dashboard
 
 ## What Is UDMarkdown ?
 Its a custom component for Universal Dashboard that let you render markdown inside Universal Dashboard.
@@ -51,6 +50,8 @@ Go to **.\Source\node_modules\highlight.js\lib\languages\powershell.js** and add
 
 ## Examples
 
+
+![alt text](./assets/example.png)
 ##### Inline Code
 Using `-Styles` parameter in `New-UDMarkdown` you can style any tag.  
 
