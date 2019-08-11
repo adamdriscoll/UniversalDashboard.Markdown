@@ -1,6 +1,6 @@
 workflow "New workflow" {
-  on = "repository_vulnerability_alert"
   resolves = ["GitHub Action for npm"]
+  on = "repository_vulnerability_alert"
 }
 
 action "GitHub Action for npm" {
